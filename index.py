@@ -3,6 +3,7 @@ import time
 import requests
 import xml.etree.ElementTree as ET
 from time import sleep
+import sys
 
 
 RSS_FEED = "http://feeds.feedburner.com/azquotes/quoteoftheday"
@@ -17,10 +18,6 @@ print("Hi!")
 sleep(0.5)
 print("Welcome to your desktop notifier!")
 sleep(2)
-print("This program starts whenever you run the script.")
-sleep(2)
-print("It will end at 6pm.")
-sleep(2)
 print("Let's start our day by a quote")
 sleep(2)
 print(quote)
@@ -33,7 +30,16 @@ print(".")
 sleep(0.5)
 print(".")
 sleep(2)
-print("""\_________________¶¶¶1___¶¶¶____¶¶¶1_______________
+
+
+if int(time.strftime("%H")) >= 18:
+	print("See you tomorrow!")
+	sys.exit()
+if int(time.strftime("%H")) < 9:
+	print("Your day starts at 9, go back to bed ;)")
+	sys.exit()
+
+print("""_________________¶¶¶1___¶¶¶____¶¶¶1_______________
 __________________¶¶¶____¶¶¶____1¶¶1______________
 ___________________¶¶¶____¶¶¶____¶¶¶______________
 ___________________¶¶¶____¶¶¶____¶¶¶______________
@@ -78,15 +84,14 @@ notificationstep = notify2.Notification("Stand up", "Sitting kills, moving heals
 notificationwater = notify2.Notification("Water", "Keep calm and drink water")
 
 
-while int(time.strftime("%H")) < 18:
-	if int(time.strftime("%M")) < 45:
+while int(time.strftime("%H")) < 18 and int(time.strftime("%H")) > 9:
+	if int(time.strftime("%M")) < 47:
 		if not stepReminder:
 			stepReminder = True
 		if not waterreminder and int(time.strftime("%H"))%2 == 0:
 			waterreminder = True
 		sleep(300)
 	else:
-		print("first else")
 		if int(time.strftime("%M")) == 59:
 			if stepReminder:
 				notificationstep.show()
