@@ -4,6 +4,7 @@ import requests
 import xml.etree.ElementTree as ET
 from time import sleep
 import sys
+from functions import getWorkHours
 
 # Init variables...
 RSS_FEED = "http://feeds.feedburner.com/azquotes/quoteoftheday"
@@ -12,8 +13,10 @@ resp = requests.get(RSS_FEED)
 root = ET.fromstring(resp.content)
 quote = root.find('channel/item/description').text
 
-startDay = 9
-endDay = 18
+inputUser = getWorkHours();
+
+startDay = inputUser[0]
+endDay = inputUser[1]
 lastMinute = 59
 maxMinute = 45
 waterreminder = True;
