@@ -19,12 +19,15 @@ startDay = inputUser[0]
 endDay = inputUser[1]
 lastMinute = 59
 maxMinute = 45
-waterreminder = True;
+waterreminder = True
 stepReminder = True
+lunchReminder = True
+lunchTime = 12
 
 notify2.init("Desktop Notifier")
 notificationstep = notify2.Notification("Stand up", "Sitting kills, moving heals")
 notificationwater = notify2.Notification("Water", "Keep calm and drink water")
+notificationlunch = notify2.Notification("Lunch time");
 
 
 
@@ -106,5 +109,8 @@ while int(time.strftime("%H")) < endDay and int(time.strftime("%H")) > startDay:
 			if waterreminder:
 				notificationwater.show()
 				waterreminder = False
+	if int(time.strftime("%H")) == lunchTime and 00 <= int(time.strftime("%M")) <= 59 and lunchReminder:
+		notificationlunch.show()
+		lunchReminder = False 
 
 

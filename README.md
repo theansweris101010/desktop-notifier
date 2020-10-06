@@ -7,8 +7,9 @@ What is desktop-notifier?
 desktop-notifier is a script that runs whenever you start it and 
 will remind you to take some breaks from your computer.
 It includes :
-1. A water reminder (to stay hydrated) 
-2. A walk reminder (to keep in shape)
+1. A water reminder (to stay hydrated) 💧
+2. A walk reminder (to keep in shape) 🚶‍♀️
+3. The lunch break 🥗
 
 How to use
 ----------------------
