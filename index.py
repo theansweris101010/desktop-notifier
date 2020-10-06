@@ -5,15 +5,33 @@ import xml.etree.ElementTree as ET
 from time import sleep
 import sys
 
-
+# Init variables...
 RSS_FEED = "http://feeds.feedburner.com/azquotes/quoteoftheday"
 
 resp = requests.get(RSS_FEED)
 root = ET.fromstring(resp.content)
-
 quote = root.find('channel/item/description').text
 
+startDay = 9
+endDay = 18
+lastMinute = 59
+maxMinute = 45
+waterreminder = True;
+stepReminder = True
 
+notify2.init("Desktop Notifier")
+notificationstep = notify2.Notification("Stand up", "Sitting kills, moving heals")
+notificationwater = notify2.Notification("Water", "Keep calm and drink water")
+
+
+
+# Start to print
+if int(time.strftime("%H")) >= endDay:
+	print("See you tomorrow!")
+	sys.exit()
+if int(time.strftime("%H")) < startDay:
+	print("Your day starts at ", startDay, ", go back to bed ;)")
+	sys.exit()
 print("Hi!")
 sleep(0.5)
 print("Welcome to your desktop notifier!")
@@ -30,14 +48,6 @@ print(".")
 sleep(0.5)
 print(".")
 sleep(2)
-
-
-if int(time.strftime("%H")) >= 18:
-	print("See you tomorrow!")
-	sys.exit()
-if int(time.strftime("%H")) < 9:
-	print("Your day starts at 9, go back to bed ;)")
-	sys.exit()
 
 print("""_________________¶¶¶1___¶¶¶____¶¶¶1_______________
 __________________¶¶¶____¶¶¶____1¶¶1______________
@@ -76,23 +86,17 @@ __¶¶111111111¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶111111111¶__
 """)
 
 
-waterreminder = True;
-stepReminder = True
-
-notify2.init("Desktop Notifier")
-notificationstep = notify2.Notification("Stand up", "Sitting kills, moving heals")
-notificationwater = notify2.Notification("Water", "Keep calm and drink water")
 
 
-while int(time.strftime("%H")) < 18 and int(time.strftime("%H")) > 9:
-	if int(time.strftime("%M")) < 47:
+while int(time.strftime("%H")) < endDay and int(time.strftime("%H")) > startDay:
+	if int(time.strftime("%M")) < maxMinute:
 		if not stepReminder:
 			stepReminder = True
 		if not waterreminder and int(time.strftime("%H"))%2 == 0:
 			waterreminder = True
 		sleep(300)
 	else:
-		if int(time.strftime("%M")) == 59:
+		if int(time.strftime("%M")) == lastMinute:
 			if stepReminder:
 				notificationstep.show()
 				stepReminder = False
