@@ -2,8 +2,9 @@ import notify2
 import time
 import requests
 import xml.etree.ElementTree as ET
-from time import sleep
+from time import sleep, strftime
 import sys
+import datetime
 from functions import getWorkHours
 
 # Init variables...
@@ -29,7 +30,16 @@ notificationstep = notify2.Notification("Stand up", "Sitting kills, moving heals
 notificationwater = notify2.Notification("Water", "Keep calm and drink water")
 notificationlunch = notify2.Notification("Lunch time");
 
-
+def greetUser():
+    currentTime = datetime.datetime.now()
+    if currentTime.hour < 12 :
+        print('Good morning')
+    elif currentTime.hour < 18:
+        print('Good afternoon')
+    elif currentTime.hour < 23:
+        print('Good evening')
+    else:
+        print('Good night')
 
 # Start to print
 if int(time.strftime("%H")) >= endDay:
@@ -38,7 +48,8 @@ if int(time.strftime("%H")) >= endDay:
 if int(time.strftime("%H")) < startDay:
 	print("Your day starts at ", startDay, ", go back to bed ;)")
 	sys.exit()
-print("Hi!")
+print("It's " + strftime("%H:%M"))
+greetUser()
 sleep(0.5)
 print("Welcome to your desktop notifier!")
 sleep(2)
