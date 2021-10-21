@@ -10,6 +10,7 @@ It includes :
 1. A water reminder (to stay hydrated) 💧
 2. A walk reminder (to keep in shape) 🚶‍♀️
 3. The lunch break 🥗
+4. Reminder to blink eye 👁️
 
 How to use
 ----------------------

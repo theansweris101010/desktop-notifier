@@ -5,16 +5,11 @@ import xml.etree.ElementTree as ET
 from time import sleep, strftime
 import sys
 import datetime
-from functions import getWorkHours
+import functions
+import schedule
 
-# Init variables...
-RSS_FEED = "http://feeds.feedburner.com/azquotes/quoteoftheday"
 
-resp = requests.get(RSS_FEED)
-root = ET.fromstring(resp.content)
-quote = root.find('channel/item/description').text
-
-inputUser = getWorkHours();
+inputUser = functions.getWorkHours()
 
 startDay = inputUser[0]
 endDay = inputUser[1]
@@ -28,81 +23,18 @@ lunchTime = 12
 notify2.init("Desktop Notifier")
 notificationstep = notify2.Notification("Stand up", "Sitting kills, moving heals")
 notificationwater = notify2.Notification("Water", "Keep calm and drink water")
-notificationlunch = notify2.Notification("Lunch time");
+notificationlunch = notify2.Notification("Lunch time")
+notificationend = notify2.Notification("Bye bye! See you tomorrow!")
 
-def greetUser():
-    currentTime = datetime.datetime.now()
-    if currentTime.hour < 12 :
-        print('Good morning')
-    elif currentTime.hour < 18:
-        print('Good afternoon')
-    elif currentTime.hour < 23:
-        print('Good evening')
-    else:
-        print('Good night')
 
 # Start to print
-if int(time.strftime("%H")) >= endDay:
-	print("See you tomorrow!")
-	sys.exit()
-if int(time.strftime("%H")) < startDay:
-	print("Your day starts at ", startDay, ", go back to bed ;)")
-	sys.exit()
-print("It's " + strftime("%H:%M"))
-greetUser()
-sleep(0.5)
-print("Welcome to your desktop notifier!")
-sleep(2)
-print("Let's start our day by a quote")
-sleep(2)
-print(quote)
-sleep(0.5)
-print(".")
-sleep(0.5)
-print(".")
-sleep(0.5)
-print(".")
-sleep(0.5)
-print(".")
-sleep(2)
-
-print("""_________________¶¶¶1___¶¶¶____¶¶¶1_______________
-__________________¶¶¶____¶¶¶____1¶¶1______________
-___________________¶¶¶____¶¶¶____¶¶¶______________
-___________________¶¶¶____¶¶¶____¶¶¶______________
-__________________¶¶¶____1¶¶1___1¶¶1______________
-________________1¶¶¶____¶¶¶____¶¶¶1_______________
-______________1¶¶¶____¶¶¶1___¶¶¶1_________________
-_____________¶¶¶1___1¶¶1___1¶¶1___________________
-____________1¶¶1___1¶¶1___1¶¶1____________________
-____________1¶¶1___1¶¶1___1¶¶¶____________________
-_____________¶¶¶____¶¶¶1___¶¶¶1___________________
-______________¶¶¶¶___1¶¶¶___1¶¶¶__________________
-_______________1¶¶¶1___¶¶¶1___¶¶¶¶________________
-_________________1¶¶1____¶¶¶____¶¶¶_______________
-___________________¶¶1____¶¶1____¶¶1______________
-___________________¶¶¶____¶¶¶____¶¶¶______________
-__________________1¶¶1___1¶¶1____¶¶1______________
-_________________¶¶¶____¶¶¶1___1¶¶1_______________
-________________11_____111_____11_________________
-__________¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶________
-1¶¶¶¶¶¶¶¶¶¶¶__¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶________
-1¶¶¶¶¶¶¶¶¶¶¶__1¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶________
-1¶¶_______¶¶__1¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶________
-1¶¶_______¶¶__1¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶________
-1¶¶_______¶¶__¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶________
-1¶¶_______¶¶__1¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶________
-_¶¶¶¶¶¶¶¶¶¶¶__¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶________
-_¶¶¶¶¶¶¶¶¶¶¶__¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶________
-__________¶¶___1¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶1________
-__________1¶¶___¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶_________
-____________¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶11__________
-11_____________________________________________111
-1¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶1
-__¶¶111111111¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶111111111¶__
-""")
-
-
+functions.greetUser(startDay, endDay)
+functions.printQuote()
+functions.printCoffee()
+schedule.every().hour.at(":00").do(functions.hourBeep)
+while True:
+    schedule.run_pending()
+    time.sleep(1)
 
 
 while int(time.strftime("%H")) < endDay and int(time.strftime("%H")) > startDay:
@@ -122,6 +54,4 @@ while int(time.strftime("%H")) < endDay and int(time.strftime("%H")) > startDay:
 				waterreminder = False
 	if int(time.strftime("%H")) == lunchTime and 00 <= int(time.strftime("%M")) <= 59 and lunchReminder:
 		notificationlunch.show()
-		lunchReminder = False 
-
-
+		lunchReminder = False
