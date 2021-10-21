@@ -31,7 +31,7 @@ notificationend = notify2.Notification("Bye bye! See you tomorrow!")
 functions.greetUser(startDay, endDay)
 functions.printQuote()
 functions.printCoffee()
-schedule.every().minute.do(functions.hourBeep)
+schedule.every().hour.at(":00").do(functions.hourBeep)
 while True:
     schedule.run_pending()
     time.sleep(1)

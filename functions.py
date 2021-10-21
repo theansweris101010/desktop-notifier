@@ -5,6 +5,7 @@ import sys
 from time import sleep, strftime
 import time
 from playsound import playsound
+import notify2
 
 # By default day starts at 9am and ends at 6pm
 def getWorkHours():
@@ -104,3 +105,5 @@ def printCoffee():
 
 def hourBeep():
     playsound('beep.mp3')
+    notify2.init("Desktop Notifier")
+    notify2.Notification("You must blink eyes").show()
